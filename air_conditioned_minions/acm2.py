@@ -57,6 +57,7 @@ while len(minion_list) > 0:
     index+=1
 
 # The below code can completely replace line 40-57 as it does the same thing
+# however min_rooms will require an additional +1
 # temp_minion = minion_list[0]
 
 # for index in range(1, len(minion_list)):
