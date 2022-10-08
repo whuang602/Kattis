@@ -12,54 +12,34 @@ def sortBankListByTime(bank_list):
             if bank_list[index2][1] > bank_list[index2+1][1]:
                 bank_list[index2], bank_list[index2+1] = bank_list[index2+1], bank_list[index2]
 
-def countPerTime(bank_list, total_time):
-    peoplePerTime = [0] * (total_time+1)
-    for i in range(len(bank_list)):
-        peoplePerTime[bank_list[i][1]]+=1
-    return peoplePerTime
-
 def maxAtTime(bank_list, time, isMax=True):
     temp_list = []
     for person in bank_list:
         if person[1] == time:
             temp_list.append(person[0])
-    if isMax:
-        value = 0
-        for crowns in temp_list:
-            if crowns > value:
-                value = crowns
-    else:
-        value = 100000
-        for crowns in temp_list:
-            if crowns < value:
-                value = crowns
-
-    return value
-
-def timePass(bank_list):
-    for person in bank_list:
-        person[1]-=1
-
+    max = 0
+    for crowns in temp_list:
+        if crowns > max:
+                max = crowns
+    return max
 
 bank_list = []
 max_money = 0
 time = getInput(bank_list)
 sortBankListByTime(bank_list)
-peoplePerTime = countPerTime(bank_list, time)
-print(bank_list)
-index=-1
+
 
 while len(bank_list) > 0:
-    index+=1
-    if index == len(bank_list):
-        
-    if (peoplePerTime[index] > index):
-        max = maxAtTime(bank_list,0)
-        minCmp = maxAtTime(bank_list,index,False)
-        if max > minCmp:
-            max_money += max
-    
-    
+        time-=1
+        if time < 0:
+                bank_list = []
+                continue
+        if (bank_list[-1][1] != time):
+                continue
+        max_money += maxAtTime(bank_list, time)
+        bank_list.remove([maxAtTime(bank_list, time),time])
+        for crown in bank_list:
+                if crown[1] == time:
+                        crown[1] -= 1
 
-
-
+print(max_money)
