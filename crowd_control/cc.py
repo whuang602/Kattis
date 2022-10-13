@@ -84,6 +84,7 @@ def Travel_Path(street_list, max_path):
     short_street = []
     for street in street_list:
         short_street.append([street[0], street[1]])
+
     to_visit = max_path.copy()
     travel_path = []
     while len(to_visit) > 1:
@@ -91,20 +92,15 @@ def Travel_Path(street_list, max_path):
             if (street[0] == to_visit[1]):
                 try:
                     travel_path.append(short_street.index([to_visit[0],to_visit[1]]))
-                except IndexError:
+                except ValueError:
                     travel_path.append(short_street.index([to_visit[1],to_visit[0]]))
         to_visit.pop(0)
     return travel_path
 
 def blockPaths(street_list, max_path, inte):
-    # two different sets of paths to block
-    # between traveled intersection and nontraveled ones
-    # streets not used between traveled intersection
     blocked_paths = list(range(len(street_list)))
     block_list = street_list.copy()
     travel_path = Travel_Path(street_list, max_path)
-    # print(travel_path)
-    # print(max_path)
 
     unvisited = list(range(inte))
     for intersection in max_path:
@@ -112,16 +108,12 @@ def blockPaths(street_list, max_path, inte):
     
     index = 0
     for street in block_list:
-        # print(block_list.index(street))
         if ((street[0] in unvisited and street[1] in unvisited) or (street[0] in max_path and street[1] in max_path and block_list.index(street) in travel_path)):
             street = []
             blocked_paths.remove(index)
         index+=1
     
     return blocked_paths
-
-    
-    
 
 
 street_list=[]
