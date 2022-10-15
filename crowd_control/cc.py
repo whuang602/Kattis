@@ -39,33 +39,31 @@ def findMin(path, max, nodes):
         to_visit.pop(0)
     return min
 
-# def DFS(vertex, mst_nodes):
-#     visited = []
-#     DFSrecur(vertex, mst_nodes, visited)
-#     return visited
-    
-# def DFSrecur(vertex, mst_nodes, visited):
-#     try:
-#         visited.append(vertex)
-#         for child in mst_nodes[vertex]:
-#             if child[0] not in visited:
-#                 DFSrecur(child[0], mst_nodes, visited)
-#     except TypeError:
-#         visited.append(vertex)
+def DFS(vertex, mst_nodes, inte):
+    visited1 = []
+    visited2 = []
+    DFSrecur(vertex, mst_nodes, visited1, inte)
+    DFSrecur(inte-1, mst_nodes, visited2, inte)
 
-def BFS(vertex, mst_nodes, inte):
-    visited = []
-    queue = []
-    queue.append(vertex)
-    visited.append(vertex)
-    while len(queue) > 0:
-        vertex = queue.pop(0)
-        for i in mst_nodes[vertex]:
-            if i[0] not in visited:
-                queue.append(i[0])
-                visited.append(i[0])
+    path = []
+    index1 = visited1.index(inte-1)
+    index2 = 0
+    while 0 not in path:
+        while visited1.index(visited2[index2]) > index1:
+            index2 +=1
+        index1 = visited1.index(visited2[index2])
+        path.append(visited2[index2])
+        index2 += 1
+    return path
     
-    return visited
+def DFSrecur(vertex, mst_nodes, visited, inte):
+    try:
+        visited.append(vertex)
+        for child in mst_nodes[vertex]:
+            if child[0] not in visited:
+                DFSrecur(child[0], mst_nodes, visited, inte)
+    except TypeError:
+        visited.append(vertex)
 
 def findMaxPath(paths,max,nodes):
     min = findMin(paths[0], max, nodes)
@@ -137,37 +135,20 @@ def findCycle(inte, edge, path, inte_sets):
         return True
     
     
-    # print(inte_sets)
     return False
 
 
-# fix (findCycle) and the rest of the code works 
 def optimalPath(inte, max, nodes, street_list):
     sorted_street = sortStreetWeight(street_list)
     mst_paths = []
     inte_sets = []
-    # print(sorted_street)
     for street in sorted_street:
         if (not findCycle(inte, street, mst_paths, inte_sets)):
             mst_paths.append(street)
-    # print(mst_paths)
-    
-    # test cases
-    # mst_paths = [[0,1,800],[1,2,300],[0,3,100],[3,4,80],[4,5,50],[4,6,100]]
-    # mst_paths = [[1,2,50],[0,3,30],[1,3,20]]
     
     mst_nodes = makeList(inte, mst_paths)
-    path = []
-    # visited = DFS(inte-1,mst_nodes)
-    visited = BFS(0, mst_nodes, inte)
-    print(visited)
-    index=0
-    while path[-1] != inte-1:
-        path.append(visited[index])
-        for x in mst_nodes[visited[index]]:
-            
-
-    
+    path = DFS(0,mst_nodes, inte)
+    path.reverse()
     paths = [path]
     return paths
 
