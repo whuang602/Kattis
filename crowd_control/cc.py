@@ -1,13 +1,10 @@
 def getInput(street_list):
-    max = 0
     inte, strts = [int(x) for x in input().split()]
     while (strts > 0):
         temp_input = [int(x) for x in input().split()]
         street_list.append(temp_input)
         strts -= 1
-        if (temp_input[2] > max):
-            max = temp_input[2]
-    return inte, strts, max
+    return inte, strts
 
 def makeList(inte, street_list):
     nodes = []
@@ -28,16 +25,6 @@ def sortStreetWeight(street_list):
             if sorted_street[index2][2] < sorted_street[index2+1][2]:
                 sorted_street[index2], sorted_street[index2+1] = sorted_street[index2+1], sorted_street[index2]
     return sorted_street
-
-def findMin(path, max, nodes):
-    min = max
-    to_visit = path.copy()
-    while len(to_visit) > 1:
-        for street in nodes[to_visit[0]]:
-            if (street[0] == to_visit[1] and street[1] < min):
-                min = street[1]
-        to_visit.pop(0)
-    return min
 
 def DFS(vertex, mst_nodes, inte):
     visited1 = []
@@ -64,16 +51,6 @@ def DFSrecur(vertex, mst_nodes, visited, inte):
                 DFSrecur(child[0], mst_nodes, visited, inte)
     except TypeError:
         visited.append(vertex)
-
-def findMaxPath(paths,max,nodes):
-    min = findMin(paths[0], max, nodes)
-    max_path = paths[0]
-    for path in paths:
-        path_min = findMin(path, max, nodes)
-        if (path_min > min):
-            min = path_min
-            max_path = path
-    return max_path
 
 def Travel_Path(street_list, max_path):
     short_street = []
@@ -138,7 +115,7 @@ def findCycle(inte, edge, path, inte_sets):
     return False
 
 
-def optimalPath(inte, max, nodes, street_list):
+def optimalPath(inte, nodes, street_list):
     sorted_street = sortStreetWeight(street_list)
     mst_paths = []
     inte_sets = []
@@ -149,15 +126,13 @@ def optimalPath(inte, max, nodes, street_list):
     mst_nodes = makeList(inte, mst_paths)
     path = DFS(0,mst_nodes, inte)
     path.reverse()
-    paths = [path]
-    return paths
+    return path
 
 
 street_list=[]
-inte, strts, max = getInput(street_list)
+inte, strts = getInput(street_list)
 nodes = makeList(inte,street_list)
-max_path = findMaxPath(optimalPath(inte, max, nodes, street_list), max, nodes)
-blocked_paths = blockPaths(street_list, max_path, inte)
+blocked_paths = blockPaths(street_list, optimalPath(inte, nodes, street_list), inte)
 blocked_paths.sort()
 if len(blocked_paths) == 0:
     print("none")
