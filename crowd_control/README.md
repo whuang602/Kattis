@@ -10,4 +10,4 @@ Algorithm:
 
 3) Given the optimal path and therefore streets that aren't adjacent to these paths, the streets to be blocked can be determined. This can either be done backwards by blocking all paths and selecting certain paths to unblock or selecting only adjacent streets to block. Either should work.
 
-Note: The program mainly uses lists, but can easily be made more efficient and simpler with use of other data structures (dicts, etc) 
+Note: The program mainly uses lists, but can easily be made more efficient and simpler with use of other data structures (dicts, etc). Based on what I know, Dijkstra's algorithm can be altered to achieve a similar result.
