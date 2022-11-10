@@ -1,4 +1,4 @@
-My attempt at the Batmanacci problem. The algorithm was rather simple to come up with, ironically the implementation was slightly more troublesome (mostly because of the end condition of the loop).
+My attempt at the Batmanacci problem. The algorithm was rather simple to come up with, ironically the implementation was slightly more troublesome (mostly because of the end condition of the loop, ultimately the solution was creating the 2 vs 3 if conditions).
 
 Honestly not the most optimal code for the algorithm, but it works. In short, since every word is the concatenation of the last two words, then:
 
